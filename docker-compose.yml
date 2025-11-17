@@ -1,0 +1,21 @@
+services:
+  internetbanking:
+    build: ./internetbanking
+    container_name: internetbankingv1
+    ports:
+      - "80:80"
+  loans:
+    build: ./loans
+    container_name: loanv1
+    ports:
+      - "81:80"
+  mobilebanking:
+    build: ./mobilebanking
+    container_name: mobilebankingv1
+    ports:
+      - "82:80"
+  insurance:
+    build: ./insurance
+    container_name: insurancev1
+    ports:
+      - "83:80"
