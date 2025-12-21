@@ -3,7 +3,7 @@ services:
     build: ./internetbanking
     container_name: internetbankingv1
     ports:
-      - "80:80"
+      - "85:80"
   loans:
     build: ./loans
     container_name: loanv1
