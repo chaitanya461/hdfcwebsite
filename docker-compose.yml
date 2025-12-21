@@ -5,7 +5,7 @@ services:
     ports:
       - "85:80"
   loans:
-    build: ./loan
+    build: ./loans
     container_name: loanv1
     ports:
       - "81:80"
