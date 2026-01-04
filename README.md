@@ -10,6 +10,9 @@ docker compose version
 
 docker compose up --build -d
 -------------------------------------------------------
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+
                 use these update version
 
 sudo mkdir -p /usr/lib/docker/cli-plugins
@@ -69,3 +72,45 @@ pipeline {
         }
     }
 }
+
+
+-----
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Role Image') {
+            steps {
+                dir("$folder") {
+                    sh 'docker build -t $image .'
+                }
+            }
+        }
+
+        stage('Run Mobile Container') {
+            steps {
+                sh '''
+                docker rm -f mobile-container || true
+                docker run -d -p 8082:80 --name mobile-container mobile-image:latest
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Images built and containers running successfully'
+        }
+        failure {
+            echo '❌ Pipeline failed'
+        }
+    }
+}
+
