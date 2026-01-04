@@ -82,7 +82,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                checkout scm
+                git 'https://github.com/chaitanya461/hdfcwebsite.git'
             }
         }
 
@@ -97,8 +97,8 @@ pipeline {
         stage('Run Mobile Container') {
             steps {
                 sh '''
-                docker rm -f mobile-container || true
-                docker run -d -p 8082:80 --name mobile-container mobile-image:latest
+                docker rm -f $contain || true
+                docker run -d -p $port:80 --name $contain $image
                 '''
             }
         }
@@ -113,4 +113,3 @@ pipeline {
         }
     }
 }
-
